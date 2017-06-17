@@ -6,15 +6,10 @@
 package Stimulate;
 
 import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableColumn;
-import jssc.SerialPortException;
-import jssc.SerialPortList;
-import jssc.SerialPort;
 
 
 /**
@@ -35,7 +30,7 @@ public class Stimulate {
 /**
      * @param args the command line arguments
      */
-        gpio8 io;
+        
         try {
             // Set System L&F
             UIManager.setLookAndFeel(
@@ -52,7 +47,7 @@ public class Stimulate {
         
         showWindow();
         
-        
+         
         TableColumn a = new TableColumn();
         
         global x = new global("/Users/user/StimulatorStuff/Alan"); // x is used just to initiate the global variable
@@ -64,39 +59,41 @@ public class Stimulate {
         
         stimulatForm.fillTable();
         
-        String port = "";
-        
-            String[] portNames = SerialPortList.getPortNames();
-        
-        for (int i = 0; i < portNames.length; i++){
-            
-            port = portNames[i];
-        }
-        boolean yn = false;
-        SerialPort sp = new SerialPort(port);
-     System.out.println(port);
-            try {
-                sp.openPort();
-                if (sp.isOpened()){
-                    System.out.println("is open");
-                }
-                sp.setFlowControlMode(0);
-                
-                sp.writeString("gpio iodir 00\r");
-       
-                System.out.println("iodir set" );  //<<<<<<< it never gets here
-                
-                System.out.println("the read is = " + sp.readHexString());
-                sp.closePort();
-                
-                
-
-            } catch (SerialPortException ex) {
-                Logger.getLogger(Stimulate.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("the problem is " + ex);
-            }
+//        String port = "";
+//        
+//            String[] portNames = SerialPortList.getPortNames();
+//        
+//        for (int i = 0; i < portNames.length; i++){
+//            
+//            port = portNames[i];
+//        }
+//        boolean yn = false;
+//        SerialPort sp = new SerialPort(port);
+//     System.out.println(port);
+//            try {
+//                sp.openPort();
+//                if (sp.isOpened()){
+//                    System.out.println("is open");
+//                }
+//                sp.setFlowControlMode(0);
+//                
+//                sp.writeString("gpio iodir 00\r");
+//       
+//                System.out.println("iodir set" );  //<<<<<<< it never gets here
+//                
+//                System.out.println("the read is = " + sp.readHexString());
+//                sp.closePort();
+//                
+//                
+//
+//            } catch (SerialPortException ex) {
+//                Logger.getLogger(Stimulate.class.getName()).log(Level.SEVERE, null, ex);
+//                System.out.println("the problem is " + ex);
+//            }
             
     }
+  
+  
     public static void hideWindow(){
         myForm.setVisible(false);
     }

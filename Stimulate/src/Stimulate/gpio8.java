@@ -7,8 +7,6 @@ package Stimulate;
  */
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher; /* This instances are engines that interpret patterns and perform match operations against input strings. */
-import java.util.regex.Pattern;    /* This instances are compiled representations of regular expressions. */
 import jssc.SerialPort;  /* Calls the respective serial port */
 import jssc.SerialPortException; /* initializes unmathced catagories as string */
 /**
@@ -16,7 +14,7 @@ import jssc.SerialPortException; /* initializes unmathced catagories as string *
  * @author rabrasel
  */
 public class gpio8 {
-    private String com = "/dev/tty.usbmodem144441";
+    private String com = "/dev/tty.usbmodem14231";
     private SerialPort port;
     private String outString = "";
     

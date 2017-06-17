@@ -349,11 +349,13 @@ public class stimulatForm extends javax.swing.JFrame {
 //                } catch (IOException ex) {
 //                    Logger.getLogger(stimulatForm.class.getName()).log(Level.SEVERE, null, ex);
 //                }
-            gpio8 io = new gpio8();
-            io.writePort(e);
+            io Io = new io();
+            Io.Write(String.valueOf(e));
             sleep(t * 1000);
         }
         
+        io Io = new io();
+        Io.Write(String.valueOf(0));
         Stimulate.showWindow();
     }//GEN-LAST:event_runButtonActionPerformed
     
