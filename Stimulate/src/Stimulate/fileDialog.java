@@ -5,6 +5,8 @@
  */
 package Stimulate;
 
+import java.io.File;
+
 /**
  *
  * @author user
@@ -15,13 +17,16 @@ public class fileDialog extends javax.swing.JDialog {
     public static boolean isSave = false;
     /**
      * Creates new form fileDialog
+     * @param parent
+     * @param modal
      */
     public fileDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-    System.out.println("did init");
+    
         if(isOpen || isAddStim) {
             fileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
+            
         } else {
             fileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         }
@@ -44,6 +49,7 @@ public class fileDialog extends javax.swing.JDialog {
 
         fileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         fileChooser.setDialogTitle("My little Dialog");
+        fileChooser.setFileFilter(new MyCustomFilter());
         fileChooser.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
         fileChooser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,14 +63,15 @@ public class fileDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(fileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(fileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -91,6 +98,9 @@ public class fileDialog extends javax.swing.JDialog {
                addStim.file = result;
            } 
            if(isOpen || isSave) {
+               if(!result.toLowerCase().contains(".rab")){
+                   result = result + ".rab";
+               }
                stimDataControler.setFile(result);
            }
            isAddStim = false;
@@ -145,4 +155,28 @@ public class fileDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser fileChooser;
     // End of variables declaration//GEN-END:variables
+
+    private static class MyCustomFilter extends javax.swing.filechooser.FileFilter  {
+
+        public MyCustomFilter() {
+        }
+
+        @Override
+        public boolean accept(File f) {
+            if(isAddStim){
+                return f.isDirectory() || f.isFile(); 
+            }else {
+                return f.isDirectory() || f.getAbsolutePath().endsWith(".rab"); 
+            }
+        }
+
+        @Override
+        public String getDescription() {
+            if(isAddStim){
+                return "All Files";
+            }else {
+                return "Stim doc (*.rab)";
+            }
+        }
+    }
 }

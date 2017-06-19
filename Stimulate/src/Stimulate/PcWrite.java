@@ -31,27 +31,9 @@ public class PcWrite {
             port = portNames[i];
         }
         sp = new SerialPort(port);
-        
-//        sp.openPort();
-//        if(sp.isOpened()){
-//            System.out.println("opened the pc port   "   + sp.getPortName());
-//        } else {
-//            System.out.println("did not open the pc port  " + sp.getPortName());
-//        }
-//        sp.setFlowControlMode(0);
-//        
-//        outString = "\r" + s + "\r";
-// System.out.println(outString);
-//        boolean b = sp.writeString(outString);
-//        if(b){
-//            System.out.println("we wrote pc string");
-//        } else {
-//            System.out.println("We didn't do the pc string");
-//        }
-//        //sp.purgePort(SerialPort.PURGE_RXCLEAR & SerialPort.PURGE_TXCLEAR);
-//        sp.closePort();
 
-        s = "\r" + s + "\r";
+
+        s ="\rgpio writeall 0" + s + "\r";
         try {
                 sp.openPort();
                 if (sp.isOpened()){

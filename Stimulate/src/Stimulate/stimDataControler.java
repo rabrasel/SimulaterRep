@@ -27,6 +27,7 @@ public class stimDataControler {
     static String  file = "";
     String  nickName;
     static boolean saveCanceled = false;
+    public final String FS = "\b"; //for seperating the different fields on the disk
     
     
     public stimDataControler(String name){
@@ -85,8 +86,9 @@ public class stimDataControler {
 
                for (int i = 0; i < getCount(); i++){
                    out.println(global.myStimData.stimArray.get(i).getLocation() +
-                   " " + global.myStimData.stimArray.get(i).getTime() +
-                   " " + global.myStimData.nickName + ".txt");
+                   FS + global.myStimData.stimArray.get(i).getTime() +
+                   FS + global.myStimData.stimArray.get(i).getFileName()  +
+                   FS + global.myStimData.stimArray.get(i).getEvent());
                }
                out.close();
            } catch (IOException e){
@@ -122,7 +124,12 @@ public class stimDataControler {
                 line = br.readLine();
 
                 while (line != null){
-                    String[] ss= line.split(" ",3);
+                    String[] ss;
+                    
+                    ss = line.split(FS);
+  for(String s:ss){
+ System.out.println(s);
+  }
                     global.myStimData.addStimData(Integer.parseInt(ss[0]), 
                             Double.parseDouble(ss[1]), ss[2], Integer.parseInt(ss[3]));
                     line = br.readLine();

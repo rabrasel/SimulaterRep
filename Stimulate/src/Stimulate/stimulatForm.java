@@ -5,13 +5,15 @@
  */
 package Stimulate;
 
-import java.awt.Desktop;
 import java.awt.Font;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javafx.scene.paint.Color;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -27,6 +29,13 @@ public class stimulatForm extends javax.swing.JFrame {
      */
     static DefaultTableModel model;
     static DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+    int y = 0;
+    Timer tm;
+    int delay = 0;
+    openFiles x;
+    JLabel jl = new JLabel();
+    JPanel jp = new JPanel();
+    JFrame jf = new JFrame();
     
     public stimulatForm() {
         initComponents();
@@ -334,30 +343,79 @@ public class stimulatForm extends javax.swing.JFrame {
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
-        int e;
-        double t;
+       Stimulate.hideWindow();
+       jf.setExtendedState(JFrame.MAXIMIZED_BOTH);
+       jp.setBounds(jf.getBounds());
+       jp.setBackground(java.awt.Color.lightGray);
+       jl.setBounds(jp.getBounds());
+       jf.add(jp);
+       jp.add(jl);
+       jf.setVisible(true);
+       
         
-        //Stimulate.hideWindow();
+       delay = (int) (1000 * global.myStimData.stimArray.get(y).getTime());
+       x = new openFiles(global.myStimData.stimArray.get(y).getFileName(), jl); 
+       tm = new Timer(delay,new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               y++;
+               x.close(); //turn off sound file
+               if(y<global.myStimData.stimArray.size()){
+                    x = new openFiles(global.myStimData.stimArray.get(y).getFileName(), jl); 
+                    updateTimer();
+               }else{
+                   jf.dispose();
+                   tm.stop();
+                   Stimulate.showWindow();
+               }
+           }
+       });
+       
+       tm.start();
+       
+       
+//        double t;
+//        ArrayList<openFiles> of = new ArrayList<openFiles>();
+//        
+//        //Stimulate.hideWindow();
+//        
+//        for (int i = 0; i < global.myStimData.stimArray.size(); i++){
+//            //e = global.myStimData.stimArray.get(i).event;
+//            
+//            String fName = global.myStimData.stimArray.get(i).fileName;
+//            of.add(new openFiles(fName));
+//        }
+//        
+//        int i;
+//        for (i = 0; i < of.size(); i++){
+//            t = global.myStimData.stimArray.get(i).time;
+//            of.get(i).run();
+//            if(i>0){
+//                of.get( i -1).close();
+//            }
+//            try {
+//                TimeUnit.SECONDS.sleep((long) t);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(stimulatForm.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        of.get(i-1).close();
+            //io Io = new io();
+            //io.Write(String.valueOf(e));
+            
+            //of[i].close();
         
-        for (int i = 0; i < global.myStimData.stimArray.size(); i++){
-            e = global.myStimData.stimArray.get(i).event;
-            t = global.myStimData.stimArray.get(i).time;
-            String fName = global.myStimData.stimArray.get(i).fileName;
-            File f = new File(fName);
-//                try {
-//                    Desktop.getDesktop().open(f );
-//                } catch (IOException ex) {
-//                    Logger.getLogger(stimulatForm.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-            io Io = new io();
-            Io.Write(String.valueOf(e));
-            sleep(t * 1000);
-        }
         
         io Io = new io();
         Io.Write(String.valueOf(0));
-        Stimulate.showWindow();
+        
     }//GEN-LAST:event_runButtonActionPerformed
+    
+    private void updateTimer(){
+            tm.stop();
+            tm.setInitialDelay((int) (global.myStimData.stimArray.get(y).getTime() * 1000));
+            tm.restart();
+    }
     
     public static void fillTable(){
         int rc = model.getRowCount();
@@ -383,12 +441,7 @@ public class stimulatForm extends javax.swing.JFrame {
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
 }
-//        long a = System.currentTimeMillis();
-//        long b = System.currentTimeMillis();
-//        while ((b - a) <= amt)
-//        {
-//            b = System.currentTimeMillis();
-//        }
+
     }
     /**
      * @param args the command line arguments
