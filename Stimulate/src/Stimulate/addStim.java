@@ -230,11 +230,13 @@ public class addStim extends javax.swing.JDialog {
     public void orderArray(stimData sd){
         stimDataControler sdc = new stimDataControler("temp");
         int x = 1;
+        boolean isPlaced = false;
     
         for (int i = 0; i < global.myStimData.stimArray.size(); i++){
             if(x == sd.location){
                 sdc.addStimData(sd.getLocation(), sd.getTime(), sd.getFileName(), sd.getEvent());
                 x++;
+                isPlaced = true;
             }
             
 //            sdTemp.setLocation(x);
@@ -248,6 +250,9 @@ public class addStim extends javax.swing.JDialog {
             
             x++;
             
+        }
+        if(!isPlaced){
+            sdc.addStimData(sdc.getCount() + 1, sd.getTime(), sd.getFileName(), sd.getEvent());
         }
 
         global.myStimData.stimArray.clear();
