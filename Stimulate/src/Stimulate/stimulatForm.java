@@ -8,7 +8,6 @@ package Stimulate;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javafx.scene.paint.Color;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -345,6 +344,7 @@ public class stimulatForm extends javax.swing.JFrame {
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
        Stimulate.hideWindow();
        jf.setExtendedState(JFrame.MAXIMIZED_BOTH);
+       jf.setUndecorated(true);
        jp.setBounds(jf.getBounds());
        jp.setBackground(java.awt.Color.lightGray);
        jl.setBounds(jp.getBounds());
@@ -362,10 +362,13 @@ public class stimulatForm extends javax.swing.JFrame {
                x.close(); //turn off sound file
                if(y<global.myStimData.stimArray.size()){
                     x = new openFiles(global.myStimData.stimArray.get(y).getFileName(), jl); 
+                    sendEvent(global.myStimData.stimArray.get(y).getEvent());
                     updateTimer();
                }else{
                    jf.dispose();
                    tm.stop();
+                   sendEvent(global.myStimData.stimArray.get(y).getEvent());
+                   y=0;
                    Stimulate.showWindow();
                }
            }
@@ -373,43 +376,23 @@ public class stimulatForm extends javax.swing.JFrame {
        
        tm.start();
        
-       
-//        double t;
-//        ArrayList<openFiles> of = new ArrayList<openFiles>();
-//        
-//        //Stimulate.hideWindow();
-//        
-//        for (int i = 0; i < global.myStimData.stimArray.size(); i++){
-//            //e = global.myStimData.stimArray.get(i).event;
-//            
-//            String fName = global.myStimData.stimArray.get(i).fileName;
-//            of.add(new openFiles(fName));
-//        }
-//        
-//        int i;
-//        for (i = 0; i < of.size(); i++){
-//            t = global.myStimData.stimArray.get(i).time;
-//            of.get(i).run();
-//            if(i>0){
-//                of.get( i -1).close();
-//            }
-//            try {
-//                TimeUnit.SECONDS.sleep((long) t);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(stimulatForm.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
+       sendEvent(global.myStimData.stimArray.get(y).getEvent());
 //        of.get(i-1).close();
-            //io Io = new io();
-            //io.Write(String.valueOf(e));
-            
-            //of[i].close();
+//            io Io = new io();
+//            io.Write(String.valueOf(e));
+//            
+//            of[i].close();
         
         
-        io Io = new io();
-        Io.Write(String.valueOf(0));
+//        io Io = new io();
+//        Io.Write(String.valueOf(0));
         
     }//GEN-LAST:event_runButtonActionPerformed
+    
+    private void sendEvent(int e){
+        io Io = new io();
+        Io.Write(String.valueOf(e));
+    }
     
     private void updateTimer(){
             tm.stop();

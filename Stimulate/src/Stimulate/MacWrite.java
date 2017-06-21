@@ -22,7 +22,6 @@ public class MacWrite {
     private static final short VENDOR_ID = 0x2a19;
     private static final short PRODUCT_ID = 0x801;
     private static final byte INTERFACE = 1;
-    //private static final byte IN_ENDPOINT = (byte) 0x83;
     private static final byte OUT_ENDPOINT = 0x03;
     private static final int TIMEOUT = 5000;
     private static DeviceHandle handle;
@@ -43,9 +42,9 @@ public class MacWrite {
     
     
     public void Write(String s) throws InterruptedException{
-System.out.println(s.length());
+
         s ="\rgpio writeall 0" + s + "\r";
- System.out.println(s.length());
+ 
         // Initialize the libusb context
         int result = LibUsb.init(null);
         if (result != LibUsb.SUCCESS)
@@ -90,11 +89,7 @@ System.out.println(s.length());
         // Deinitialize the libusb context
         LibUsb.exit(null);
     }
-    
-    
-    
-    
-   
+
     private static void outWright(DeviceHandle handle, byte[] data)
     {
         ByteBuffer buffer = BufferUtils.allocateByteBuffer(data.length);

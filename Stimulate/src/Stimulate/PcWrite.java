@@ -40,7 +40,7 @@ public class PcWrite {
                     System.out.println("is open");
                 }
                 sp.setFlowControlMode(0);
-    System.out.println(s);
+    
                 sp.writeString("\rgpio iodir 00\r");
                 sp.writeString(s);
        

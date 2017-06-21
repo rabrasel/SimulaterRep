@@ -46,10 +46,8 @@ public class Stimulate {
         if (defaults.get("Table.alternateRowColor") == null)
         defaults.put("Table.alternateRowColor", new Color(240, 240, 240));
 
-        
         showWindow();
 
-         
         TableColumn a = new TableColumn();
         
         global x = new global("/Users/user/StimulatorStuff/Alan"); // x is used just to initiate the global variable
@@ -58,32 +56,8 @@ public class Stimulate {
         global.myStimData.addStimData(2, 10, "/Users/user/Pictures/microScope.png", 4);
         global.myStimData.addStimData(3, 10, "/Users/user/Music/iTunes/iTunes Music/Unknown Artist/Unknown Album/kellys-heroes.mp3", 2);
 
-        
         stimulatForm.fillTable();
-        
-//        hideWindow();
-//            
-//        try {
-//                openFiles tryThis = new openFiles("/Users/user/Pictures/microScope.png");
-//                tryThis.run();
-//                TimeUnit.SECONDS.sleep(3);
-//                //tryThis.close();
-//                openFiles tryThis2 = new openFiles("/Users/user/Desktop/desktop/11-24-09_1756.jpeg");
-//                tryThis2.run();
-//                tryThis.close();
-//                TimeUnit.SECONDS.sleep(3);
-//                
-//                openFiles tryThis3 = new openFiles("/Users/user/Music/iTunes/iTunes Music/Unknown Artist/Unknown Album/kellys-heroes.mp3");
-//                tryThis3.run();
-//                tryThis2.close();
-//                TimeUnit.SECONDS.sleep(10);
-//                tryThis3.close();
-//                
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(Stimulate.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        showWindow(); 
-       
+ 
     }
   
   

@@ -5,13 +5,11 @@
  */
 package Stimulate;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
@@ -106,7 +104,7 @@ public class openFiles {
                 }
             }
         }
-        Rectangle r = jl.getBounds();
+        Dimension r = Toolkit.getDefaultToolkit().getScreenSize();
 
         Dimension d = new Dimension();
         int fSize = 0;
@@ -132,7 +130,7 @@ public class openFiles {
         mt = new FontMetrics(f) {};      
         Rectangle2D bounds = mt.getStringBounds(t, null);
         size.setSize(bounds.getWidth(), bounds.getHeight());
- 
+        
         return size;
     }
     
