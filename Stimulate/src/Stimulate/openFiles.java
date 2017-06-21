@@ -86,7 +86,7 @@ public class openFiles {
      }
   
     private String readText(String sFile, JLabel jl) throws FileNotFoundException, IOException{
-        ArrayList<String> sb = new ArrayList();
+        ArrayList<String> sb = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(sFile));
         String line = br.readLine();
         sb.add(line + "\n");
