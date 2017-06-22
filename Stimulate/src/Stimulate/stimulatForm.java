@@ -5,6 +5,7 @@
  */
 package Stimulate;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,7 +51,7 @@ public class stimulatForm extends javax.swing.JFrame {
             .setHorizontalAlignment(SwingConstants.CENTER);
         JTableHeader header = stimTable.getTableHeader();
         header.setFont(new Font("Dialog", Font.BOLD, 15));
-       
+        this.getContentPane().setBackground( new java.awt.Color(204, 255, 204));
     }
 
     /**
@@ -86,7 +87,7 @@ public class stimulatForm extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(204, 204, 204));
+        setBackground(new java.awt.Color(204, 255, 204));
         setForeground(new java.awt.Color(204, 204, 255));
 
         jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -146,10 +147,12 @@ public class stimulatForm extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Stimulate/Shimadzulogo.gif"))); // NOI18N
 
+        runButton.setBackground(new java.awt.Color(0, 255, 204));
         runButton.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         runButton.setForeground(new java.awt.Color(255, 51, 51));
         runButton.setText("Run");
-        runButton.setBorder(new javax.swing.border.MatteBorder(null));
+        runButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 51, 51), new java.awt.Color(255, 0, 204), new java.awt.Color(153, 0, 153), new java.awt.Color(153, 0, 102)));
+        runButton.setOpaque(true);
         runButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 runButtonActionPerformed(evt);
@@ -268,26 +271,26 @@ public class stimulatForm extends javax.swing.JFrame {
                         .addComponent(editButton)
                         .addGap(31, 31, 31)
                         .addComponent(deleteButton))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
                         .addComponent(runButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(editButton)
                     .addComponent(deleteButton))
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addGap(45, 45, 45))
         );
 
         pack();
@@ -367,7 +370,7 @@ public class stimulatForm extends javax.swing.JFrame {
                }else{
                    jf.dispose();
                    tm.stop();
-                   sendEvent(global.myStimData.stimArray.get(y).getEvent());
+                   sendEvent(0);
                    y=0;
                    Stimulate.showWindow();
                }

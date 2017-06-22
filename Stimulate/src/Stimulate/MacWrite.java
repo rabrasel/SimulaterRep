@@ -5,6 +5,9 @@
  */
 package Stimulate;
 
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
@@ -12,6 +15,7 @@ import org.usb4java.BufferUtils;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
 import org.usb4java.LibUsbException;
+import javax.swing.Timer;
 
 /**
  *
@@ -20,12 +24,12 @@ import org.usb4java.LibUsbException;
 public class MacWrite {
 
     private static final short VENDOR_ID = 0x2a19;
-    private static final short PRODUCT_ID = 0x801;
+    private static final short PRODUCT_ID = 0x800;
     private static final byte INTERFACE = 1;
     private static final byte OUT_ENDPOINT = 0x03;
     private static final int TIMEOUT = 5000;
-    private static DeviceHandle handle;
- 
+    
+    private Timer tm2;
     /**
      * Main method.
      * 
@@ -42,7 +46,8 @@ public class MacWrite {
     
     
     public void Write(String s) throws InterruptedException{
-
+        DeviceHandle handle;
+        
         s ="\rgpio writeall 0" + s + "\r";
  
         // Initialize the libusb context
@@ -61,7 +66,7 @@ public class MacWrite {
             System.exit(1);
         }
         
- System.out.println(handle + "       "  + s);
+ System.out.println(handle.getPointer() + "       "  + s);
         // Claim the ADB interface
         result = LibUsb.claimInterface(handle, INTERFACE);
         if (result != LibUsb.SUCCESS)
@@ -72,8 +77,8 @@ public class MacWrite {
         // Send message
         String r = "\rgpio iodir 00\r";
         boolean b = false;
-        outWright(handle, (byte[]) r.getBytes(StandardCharsets.UTF_8));
-        outWright(handle, (byte[]) s.getBytes(StandardCharsets.UTF_8));
+        outWright(handle,(byte[]) r.getBytes(StandardCharsets.UTF_8));
+        outWright(handle,(byte[]) s.getBytes(StandardCharsets.UTF_8));
         
 
         // Release the interface
@@ -82,12 +87,35 @@ public class MacWrite {
         {
             throw new LibUsbException("Unable to release interface", result);
         }
+        
+        tm2 = new Timer(100,new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DeviceHandle myhandle = LibUsb.openDeviceWithVidPid(null, VENDOR_ID, PRODUCT_ID);
+                if (myhandle == null)
+                {
+                    System.err.println("Test device not found.");
+                    System.exit(1);
+                }
+                int result = LibUsb.claimInterface(myhandle, INTERFACE);
+                if (result != LibUsb.SUCCESS)
+                {
+                    throw new LibUsbException("Unable to claim interface", result);
+                }
+                String s ="\rgpio writeall 00\r";
+     System.out.println(myhandle.getPointer() + "       "  + s);
+                outWright(myhandle,(byte[]) s.getBytes(StandardCharsets.UTF_8));
+                // Close the device
+                LibUsb.close(myhandle);
+                // Deinitialize the libusb context
+                LibUsb.exit(null);
+                tm2.stop();
+            }
+        });
 
+        tm2.start();
         // Close the device
         LibUsb.close(handle);
-
-        // Deinitialize the libusb context
-        LibUsb.exit(null);
     }
 
     private static void outWright(DeviceHandle handle, byte[] data)

@@ -99,7 +99,7 @@ public class openFiles {
         for(int i = 0; i<sb.size();i++){
             s = s + sb.get(i);
             if(i>0){
-                if(sb.get(i).length() > sb.get(i -1).length()){
+                if(sb.get(i).length() > sb.get(largest).length()){
                     largest = i;
                 }
             }
